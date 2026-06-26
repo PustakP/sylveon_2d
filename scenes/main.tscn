@@ -1,19 +1,41 @@
-; Main scene — root of the game
+; Main scene — Control root with SubViewportContainer for proper post-processing
 [gd_scene load_steps=3 format=3 uid="uid://main_scene"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cursor"]
-bg_color = Color(0.4, 0.9, 0.4, 0.8)
+bg_color = Color(0.4, 0.9, 0.4, 0.9)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Control"]
 script = ExtResource("1_main")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="RoomContainer" type="Node2D" parent="."]
+[node name="GameViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+mouse_filter = 0
+
+[node name="GameViewport" type="SubViewport" parent="GameViewportContainer"]
+size = Vector2i(1280, 720)
+transparent_bg = false
+render_target_update_mode = 4
+
+[node name="RoomContainer" type="Node2D" parent="GameViewportContainer/GameViewport"]
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 layer = 10
@@ -50,6 +72,7 @@ bbcode_enabled = true
 text = ""
 scroll_active = false
 fit_content = true
+mouse_filter = 2
 
 [node name="CursorDot" type="Panel" parent="UILayer"]
 custom_minimum_size = Vector2(8, 8)
