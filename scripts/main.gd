@@ -3,10 +3,10 @@ extends Node2D
 ## Main — root of the game, orchestrates room transitions and global UI
 
 @onready var room_container: Node2D = $RoomContainer
-@onready var ui_layer: CanvasLayer = $UILayer
-@onready var prompt_label: Label = $UILayer/PromptLabel
-@onready var message_label: RichTextLabel = $UILayer/MessageLabel
-@onready var cursor_dot: Panel = $UILayer/CursorDot
+var ui_layer: CanvasLayer = null
+var prompt_label: Label = null
+var message_label: RichTextLabel = null
+var cursor_dot: Panel = null
 
 # Scene map: room_id → scene path
 const ROOM_SCENES: Dictionary = {
@@ -26,6 +26,14 @@ var showing_dialogue: bool = false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
+	# CanvasLayer children don't resolve via $ from Node2D — use get_node explicitly
+	ui_layer = get_node_or_null("UILayer")
+	if ui_layer:
+		prompt_label = ui_layer.get_node_or_null("PromptLabel")
+		message_label = ui_layer.get_node_or_null("MessageLabel")
+		cursor_dot = ui_layer.get_node_or_null("CursorDot")
+	
 	_setup_ui()
 	
 	# Connect to GameManager signals
@@ -37,23 +45,25 @@ func _ready() -> void:
 	_load_room("corridor")
 
 func _setup_ui() -> void:
-	prompt_label.text = ""
-	prompt_label.modulate = Color(0.7, 0.85, 0.7, 0.0)
-	message_label.text = ""
-	message_label.modulate = Color(0.7, 0.85, 0.7, 0.0)
-	cursor_dot.modulate = Color(0.6, 0.9, 0.6, 0.7)
+	if prompt_label:
+		prompt_label.text = ""
+		prompt_label.modulate = Color(0.7, 0.85, 0.7, 0.0)
+	if message_label:
+		message_label.text = ""
+		message_label.modulate = Color(0.7, 0.85, 0.7, 0.0)
+	if cursor_dot:
+		cursor_dot.modulate = Color(0.6, 0.9, 0.6, 0.7)
 
 func _process(delta: float) -> void:
 	# Update custom cursor
-	cursor_dot.position = get_viewport().get_mouse_position() - Vector2(4, 4)
+	if cursor_dot:
+		cursor_dot.position = get_viewport().get_mouse_position() - Vector2(4, 4)
+		var pulse = sin(GameManager.game_time * 4.0) * 0.15 + 0.85
+		cursor_dot.modulate.a = pulse * 0.7
 	
 	# Decay interaction prompt if no longer hovering
 	if interaction_cooldown > 0.0:
 		interaction_cooldown -= delta
-	
-	# Pulsing cursor
-	var pulse = sin(GameManager.game_time * 4.0) * 0.15 + 0.85
-	cursor_dot.modulate.a = pulse * 0.7
 
 func _load_room(room_id: String) -> void:
 	if is_transitioning:
@@ -123,17 +133,23 @@ func _on_event_triggered(event_id: String) -> void:
 				shader_mgr.flash_static(0.3)
 
 func _show_prompt(text: String, _action: Callable) -> void:
+	if not prompt_label:
+		return
 	prompt_label.text = text
 	var tween = create_tween()
 	tween.tween_property(prompt_label, "modulate:a", 1.0, 0.3)
 
 func _hide_prompt() -> void:
+	if not prompt_label:
+		return
 	var tween = create_tween()
 	tween.tween_property(prompt_label, "modulate:a", 0.0, 0.5)
 	await tween.finished
 	prompt_label.text = ""
 
 func show_message(text: String, duration: float = 3.5) -> void:
+	if not message_label:
+		return
 	if showing_dialogue:
 		dialogue_queue.append(text)
 		return
