@@ -1,0 +1,34 @@
+; ShaderManager scene — global post-processing canvas layer
+[gd_scene load_steps=2 format=3 uid="uid://shader_manager"]
+
+[ext_resource type="Script" path="res://scripts/shader_manager.gd" id="1_sm"]
+
+[node name="ShaderManager" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_sm")
+
+[node name="PostProcessRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DarknessRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+mouse_filter = 2
+
+[node name="StaticRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+visible = false

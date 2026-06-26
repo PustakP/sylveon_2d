@@ -1,0 +1,71 @@
+; Room: Corridor
+[gd_scene load_steps=7 format=3 uid="uid://room_corridor"]
+
+[ext_resource type="Script" path="res://scripts/room_corridor.gd" id="1_rc"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/corridor.jpg" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/figure.jpg" id="3_fig"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(120, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fwd"]
+size = Vector2(300, 280)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fig"]
+size = Vector2(80, 160)
+
+[node name="RoomCorridor" type="Node2D"]
+script = ExtResource("1_rc")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+mouse_filter = 2
+
+[node name="Figure" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 180.0
+offset_top = -70.0
+offset_right = 260.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_fig")
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(0.0, 0.0, 0.0, 0.0)
+mouse_filter = 2
+
+[node name="InteractionZones" type="Node2D" parent="."]
+
+[node name="DoorZone" type="Area2D" parent="InteractionZones"]
+position = Vector2(200, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZones/DoorZone"]
+shape = SubResource("RectangleShape2D_door")
+
+[node name="ForwardZone" type="Area2D" parent="InteractionZones"]
+position = Vector2(640, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZones/ForwardZone"]
+shape = SubResource("RectangleShape2D_fwd")
+
+[node name="FigureZone" type="Area2D" parent="InteractionZones"]
+position = Vector2(820, 330)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZones/FigureZone"]
+shape = SubResource("RectangleShape2D_fig")
+
+[node name="FigureFlicker" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
