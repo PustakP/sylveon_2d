@@ -9,24 +9,27 @@ signal show_message(text: String, duration: float)
 signal play_sound(sound_name: String)
 
 @onready var background: TextureRect = $Background
-@onready var back_zone: Area2D = $BackZone
-@onready var descend_zone: Area2D = $DescendZone
+@onready var back_zone: Area2D = $InteractionZones/BackZone
+@onready var descend_zone: Area2D = $InteractionZones/DescendZone
 @onready var event_timer: Timer = $EventTimer
 
 var can_interact: bool = true
 var descent_count: int = 0
 
 func _ready() -> void:
-	back_zone.mouse_entered.connect(_on_back_hover)
-	back_zone.mouse_exited.connect(_on_exit_zone)
-	back_zone.input_event.connect(_on_back_click)
+	if back_zone:
+		back_zone.mouse_entered.connect(_on_back_hover)
+		back_zone.mouse_exited.connect(_on_exit_zone)
+		back_zone.input_event.connect(_on_back_click)
 	
-	descend_zone.mouse_entered.connect(_on_descend_hover)
-	descend_zone.mouse_exited.connect(_on_exit_zone)
-	descend_zone.input_event.connect(_on_descend_click)
+	if descend_zone:
+		descend_zone.mouse_entered.connect(_on_descend_hover)
+		descend_zone.mouse_exited.connect(_on_exit_zone)
+		descend_zone.input_event.connect(_on_descend_click)
 	
-	event_timer.timeout.connect(_random_event)
-	event_timer.start(randf_range(6.0, 12.0))
+	if event_timer:
+		event_timer.timeout.connect(_random_event)
+		event_timer.start(randf_range(6.0, 12.0))
 
 func on_enter() -> void:
 	GameManager.set_flag("entered_staircase")

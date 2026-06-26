@@ -10,8 +10,8 @@ signal play_sound(sound_name: String)
 
 @onready var background: TextureRect = $Background
 @onready var key_object: TextureRect = $KeyObject
-@onready var back_zone: Area2D = $BackZone
-@onready var key_zone: Area2D = $KeyZone
+@onready var back_zone: Area2D = $InteractionZones/BackZone
+@onready var key_zone: Area2D = $InteractionZones/KeyZone
 @onready var breath_timer: Timer = $BreathTimer
 
 var key_taken: bool = false
@@ -27,16 +27,19 @@ func _ready() -> void:
 	key_shader_mat.shader = load("res://shaders/item_glow.gdshader")
 	key_object.material = key_shader_mat
 	
-	back_zone.mouse_entered.connect(_on_back_hover)
-	back_zone.mouse_exited.connect(_on_back_exit)
-	back_zone.input_event.connect(_on_back_click)
+	if back_zone:
+		back_zone.mouse_entered.connect(_on_back_hover)
+		back_zone.mouse_exited.connect(_on_back_exit)
+		back_zone.input_event.connect(_on_back_click)
 	
-	key_zone.mouse_entered.connect(_on_key_hover)
-	key_zone.mouse_exited.connect(_on_key_exit)
-	key_zone.input_event.connect(_on_key_click)
+	if key_zone:
+		key_zone.mouse_entered.connect(_on_key_hover)
+		key_zone.mouse_exited.connect(_on_key_exit)
+		key_zone.input_event.connect(_on_key_click)
 	
-	breath_timer.timeout.connect(_on_breath)
-	breath_timer.start(randf_range(5.0, 12.0))
+	if breath_timer:
+		breath_timer.timeout.connect(_on_breath)
+		breath_timer.start(randf_range(5.0, 12.0))
 
 func on_enter() -> void:
 	play_sound.emit("static")

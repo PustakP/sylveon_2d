@@ -38,8 +38,6 @@ func _process(_delta: float) -> void:
 		_fill_ambient_buffer()
 
 var _ambient_phase: float = 0.0
-var _noise_phase: float = 0.0
-var _time_acc: float = 0.0
 
 func _fill_ambient_buffer() -> void:
 	var playback = ambient_player.get_stream_playback() as AudioStreamGeneratorPlayback

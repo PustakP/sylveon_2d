@@ -9,18 +9,20 @@ signal show_message(text: String, duration: float)
 signal play_sound(sound_name: String)
 
 @onready var background: TextureRect = $Background
-@onready var look_zone: Area2D = $LookZone
+@onready var look_zone: Area2D = $InteractionZones/LookZone
 @onready var sequence_timer: Timer = $SequenceTimer
 
 var sequence_step: int = 0
 var running: bool = false
 
 func _ready() -> void:
-	look_zone.mouse_entered.connect(_on_look_hover)
-	look_zone.mouse_exited.connect(_on_look_exit)
-	look_zone.input_event.connect(_on_look_click)
+	if look_zone:
+		look_zone.mouse_entered.connect(_on_look_hover)
+		look_zone.mouse_exited.connect(_on_look_exit)
+		look_zone.input_event.connect(_on_look_click)
 	
-	sequence_timer.timeout.connect(_next_sequence)
+	if sequence_timer:
+		sequence_timer.timeout.connect(_next_sequence)
 
 func on_enter() -> void:
 	GameManager.set_flag("reached_end")

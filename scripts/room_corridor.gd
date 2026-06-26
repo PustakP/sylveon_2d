@@ -11,9 +11,9 @@ signal play_sound(sound_name: String)
 
 @onready var background: TextureRect = $Background
 @onready var figure: TextureRect = $Figure
-@onready var door_zone: Area2D = $DoorZone
-@onready var forward_zone: Area2D = $ForwardZone
-@onready var figure_zone: Area2D = $FigureZone
+@onready var door_zone: Area2D = $InteractionZones/DoorZone
+@onready var forward_zone: Area2D = $InteractionZones/ForwardZone
+@onready var figure_zone: Area2D = $InteractionZones/FigureZone
 @onready var figure_flicker: Timer = $FigureFlicker
 
 var figure_visible: bool = false
@@ -25,20 +25,24 @@ func _ready() -> void:
 	figure.modulate.a = 0.0
 	figure.visible = true
 	
-	# Connect zone signals
-	door_zone.mouse_entered.connect(_on_door_hover)
-	door_zone.mouse_exited.connect(_on_door_exit)
-	door_zone.input_event.connect(_on_door_click)
+	# Connect zone signals (guard against missing nodes)
+	if door_zone:
+		door_zone.mouse_entered.connect(_on_door_hover)
+		door_zone.mouse_exited.connect(_on_door_exit)
+		door_zone.input_event.connect(_on_door_click)
 	
-	forward_zone.mouse_entered.connect(_on_forward_hover)
-	forward_zone.mouse_exited.connect(_on_forward_exit)
-	forward_zone.input_event.connect(_on_forward_click)
+	if forward_zone:
+		forward_zone.mouse_entered.connect(_on_forward_hover)
+		forward_zone.mouse_exited.connect(_on_forward_exit)
+		forward_zone.input_event.connect(_on_forward_click)
 	
-	figure_zone.mouse_entered.connect(_on_figure_hover)
-	figure_zone.input_event.connect(_on_figure_click)
+	if figure_zone:
+		figure_zone.mouse_entered.connect(_on_figure_hover)
+		figure_zone.input_event.connect(_on_figure_click)
 	
-	figure_flicker.timeout.connect(_flicker_figure)
-	figure_flicker.start(randf_range(3.0, 8.0))
+	if figure_flicker:
+		figure_flicker.timeout.connect(_flicker_figure)
+		figure_flicker.start(randf_range(3.0, 8.0))
 
 func on_enter() -> void:
 	await get_tree().create_timer(1.2).timeout

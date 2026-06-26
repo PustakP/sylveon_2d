@@ -71,8 +71,9 @@ func set_darkness(value: float) -> void:
 	darkness_material.set_shader_parameter("darkness", value)
 
 func fade_to_black(duration: float = 1.0) -> void:
+	var current: float = float(darkness_material.get_shader_parameter("darkness") if darkness_material.get_shader_parameter("darkness") != null else 0.55)
 	var tween = create_tween()
-	tween.tween_method(set_darkness, darkness_material.get_shader_parameter("darkness"), 1.0, duration)
+	tween.tween_method(set_darkness, current, 1.0, duration)
 	await tween.finished
 
 func fade_from_black(duration: float = 1.0) -> void:
