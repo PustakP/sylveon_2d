@@ -16,10 +16,16 @@ signal play_sound(sound_name: String)
 
 var key_taken: bool = false
 var can_interact: bool = true
+var key_shader_mat: ShaderMaterial = null
 
 func _ready() -> void:
 	key_object.visible = not GameManager.get_flag("found_key")
 	key_taken = GameManager.get_flag("found_key")
+	
+	# Apply glow shader to key
+	key_shader_mat = ShaderMaterial.new()
+	key_shader_mat.shader = load("res://shaders/item_glow.gdshader")
+	key_object.material = key_shader_mat
 	
 	back_zone.mouse_entered.connect(_on_back_hover)
 	back_zone.mouse_exited.connect(_on_back_exit)
@@ -47,6 +53,8 @@ func on_exit() -> void:
 func _process(_delta: float) -> void:
 	# Subtle key pulse if present
 	if not key_taken and key_object.visible:
+		if key_shader_mat:
+			key_shader_mat.set_shader_parameter("time_val", GameManager.game_time)
 		var p = sin(GameManager.game_time * 2.0) * 0.08 + 0.92
 		key_object.modulate = Color(p, p * 0.85, p * 0.7, 1.0)
 

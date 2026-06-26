@@ -1,9 +1,10 @@
 ; Room: Corridor
-[gd_scene load_steps=7 format=3 uid="uid://room_corridor"]
+[gd_scene load_steps=8 format=3 uid="uid://room_corridor"]
 
 [ext_resource type="Script" path="res://scripts/room_corridor.gd" id="1_rc"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/corridor.jpg" id="2_bg"]
 [ext_resource type="Texture2D" path="res://assets/sprites/figure.jpg" id="3_fig"]
+[ext_resource type="Texture2D" path="res://assets/sprites/door.jpg" id="4_door"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
 size = Vector2(120, 200)
@@ -26,6 +27,18 @@ grow_vertical = 2
 texture = ExtResource("2_bg")
 expand_mode = 1
 stretch_mode = 6
+mouse_filter = 2
+
+[node name="DoorSprite" type="TextureRect" parent="."]
+anchors_preset = 0
+offset_left = 80.0
+offset_top = 160.0
+offset_right = 220.0
+offset_bottom = 480.0
+texture = ExtResource("4_door")
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(0.5, 0.45, 0.4, 0.85)
 mouse_filter = 2
 
 [node name="Figure" type="TextureRect" parent="."]

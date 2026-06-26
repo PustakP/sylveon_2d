@@ -1,8 +1,9 @@
 ; Room: Side Room
-[gd_scene load_steps=5 format=3 uid="uid://room_side"]
+[gd_scene load_steps=6 format=3 uid="uid://room_side"]
 
 [ext_resource type="Script" path="res://scripts/room_side.gd" id="1_rs"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/room.jpg" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/key.jpg" id="3_key"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_back"]
 size = Vector2(150, 100)
@@ -32,10 +33,13 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -20.0
 offset_top = 80.0
-offset_right = 40.0
-offset_bottom = 120.0
+offset_right = 60.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("3_key")
+expand_mode = 1
+stretch_mode = 5
 mouse_filter = 2
 modulate = Color(0.9, 0.8, 0.5, 1.0)
 
