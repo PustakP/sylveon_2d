@@ -34,6 +34,7 @@ mouse_filter = 0
 size = Vector2i(1280, 720)
 transparent_bg = false
 render_target_update_mode = 4
+physics_object_picking = true
 
 [node name="RoomContainer" type="Node2D" parent="GameViewportContainer/GameViewport"]
 
