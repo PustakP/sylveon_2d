@@ -175,7 +175,7 @@ func show_message(text: String, duration: float = 3.5) -> void:
 	message_label.text = ""
 	showing_dialogue = false
 	if dialogue_queue.size() > 0:
-		var next := dialogue_queue.pop_front()
+		var next: String = str(dialogue_queue.pop_front())
 		show_message(next)
 
 func _on_play_sound(sound_name: String) -> void:
