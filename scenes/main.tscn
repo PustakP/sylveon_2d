@@ -1,5 +1,5 @@
 ; Main scene — root of the game
-[gd_scene load_steps=5 format=3 uid="uid://main_scene"]
+[gd_scene load_steps=3 format=3 uid="uid://main_scene"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 
@@ -9,9 +9,6 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msg_bg"]
-bg_color = Color(0, 0, 0, 0)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -36,11 +33,6 @@ grow_vertical = 0
 text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
-add_theme_font_size_override = "font_size", 13
-add_theme_color_override = "font_color", Color(0.6, 0.9, 0.6, 1.0)
-add_theme_color_override = "font_shadow_color", Color(0, 0, 0, 0.8)
-add_theme_constant_override = "shadow_offset_x", 1
-add_theme_constant_override = "shadow_offset_y", 1
 
 [node name="MessageLabel" type="RichTextLabel" parent="UILayer"]
 anchors_preset = 8
@@ -58,8 +50,6 @@ bbcode_enabled = true
 text = ""
 scroll_active = false
 fit_content = true
-add_theme_font_size_override = "font_size", 14
-add_theme_color_override = "default_color", Color(0.7, 0.9, 0.7, 1.0)
 
 [node name="CursorDot" type="Panel" parent="UILayer"]
 custom_minimum_size = Vector2(8, 8)
