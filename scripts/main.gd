@@ -45,9 +45,9 @@ func _ready() -> void:
 	if vpc:
 		vpc.material = ps2_material
 	
-	# Share the ps2_material with ShaderManager (used by room_ending.gd)
+	# Share the ps2_material with ShaderManager (used by room_ending.gd for escalation)
 	var shader_mgr = get_node_or_null("/root/ShaderManager")
-	if shader_mgr and shader_mgr.has_method("set") :
+	if shader_mgr:
 		shader_mgr.ps2_material = ps2_material
 	
 	_setup_ui()

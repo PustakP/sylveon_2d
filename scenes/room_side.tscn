@@ -1,4 +1,6 @@
 ; Room: Side Room
+; Explicit sizes for all Control nodes (TextureRect) — anchor-based layout
+; does not work reliably inside Node2D hierarchy within a SubViewport.
 [gd_scene load_steps=6 format=3 uid="uid://room_side"]
 
 [ext_resource type="Script" path="res://scripts/room_side.gd" id="1_rs"]
@@ -6,37 +8,25 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/key.jpg" id="3_key"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_back"]
-size = Vector2(150, 100)
+size = Vector2(300, 120)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_key"]
-size = Vector2(60, 40)
+size = Vector2(100, 70)
 
 [node name="RoomSide" type="Node2D"]
 script = ExtResource("1_rs")
 
 [node name="Background" type="TextureRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+position = Vector2(0, 0)
+size = Vector2(1280, 720)
 texture = ExtResource("2_bg")
 expand_mode = 1
-stretch_mode = 6
+stretch_mode = 0
 mouse_filter = 2
 
 [node name="KeyObject" type="TextureRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 80.0
-offset_right = 60.0
-offset_bottom = 140.0
-grow_horizontal = 2
-grow_vertical = 2
+position = Vector2(580, 430)
+size = Vector2(100, 70)
 texture = ExtResource("3_key")
 expand_mode = 1
 stretch_mode = 5
@@ -46,13 +36,15 @@ modulate = Color(0.9, 0.8, 0.5, 1.0)
 [node name="InteractionZones" type="Node2D" parent="."]
 
 [node name="BackZone" type="Area2D" parent="InteractionZones"]
-position = Vector2(100, 650)
+position = Vector2(80, 650)
+input_pickable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZones/BackZone"]
 shape = SubResource("RectangleShape2D_back")
 
 [node name="KeyZone" type="Area2D" parent="InteractionZones"]
-position = Vector2(640, 500)
+position = Vector2(630, 465)
+input_pickable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZones/KeyZone"]
 shape = SubResource("RectangleShape2D_key")

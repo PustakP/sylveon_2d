@@ -11,20 +11,18 @@ size = Vector2(1280, 720)
 script = ExtResource("1_re")
 
 [node name="Background" type="TextureRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+position = Vector2(0, 0)
+size = Vector2(1280, 720)
 texture = ExtResource("2_bg")
 expand_mode = 1
-stretch_mode = 6
+stretch_mode = 0
 mouse_filter = 2
 
 [node name="InteractionZones" type="Node2D" parent="."]
 
 [node name="LookZone" type="Area2D" parent="InteractionZones"]
 position = Vector2(640, 360)
+input_pickable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZones/LookZone"]
 shape = SubResource("RectangleShape2D_look")
